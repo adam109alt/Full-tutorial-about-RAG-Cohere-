@@ -79,3 +79,10 @@ User Question -> Embed the question -> Search on it on the DataBase -> Get top c
 >  Why does Cohere have all 3? Most providers only give you the LLM (like GPT). Cohere was built from the ground up for enterprise search and RAG, so they built all the tools you need in one place. This is a big advantage — you don't need to mix and match from different companies.
 
 
+## Step 1 for using RAG ~ Chunks
+
+You can not embed a full book at once as one piece, And here is why:
+
+**Tokens** ~ Every LLM haves a tokens limit for procedding things at once 
+**Search quality drops** ~  if a chunk is too big, the vector becomes a "blurry" average of many topics. When you search for one topic, it might not match well
+**LLM context is expensive** ~ Putting the full book in the context will be expensive 
