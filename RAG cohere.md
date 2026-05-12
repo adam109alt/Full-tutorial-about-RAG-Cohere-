@@ -206,3 +206,61 @@ In overlap chunking — if you set your overlap to **100%**, what do you think w
 
 ## NOW LET'S CODEEEEEE!!!!!!
 
+```
+import cohere 
+import os
+from dotenv import load_dotenv
+
+load_dotenv('cohere_api.env')
+
+api_key = os.getenv('cohere_api_key')
+co = cohere.ClientV2(api_key=api_key)
+
+
+# Make an function that is about chunking our text
+def chunk_text(text: str, chunking: int = 50, overlaping: int = 10) -> list[str]:
+    """
+    This function will be for chunking the text using the overlap method
+
+    chunking = will take how mutch word do we want to chunk, And the deafult number for it is 50
+    overlaping = will take the last 10 words from the chunk that is behind it, And the deafult number is 10
+    """
+
+    words = text.split() 
+
+    chunks = []
+    start = 0 
+
+    while start < len(words): 
+        end = start + chunking # 0 + 50 = 50
+
+        r = ' '.join(words[start:end])
+
+        if r.strip():
+            chunks.append(r.strip())
+
+        start = end - overlaping # 50 - 10 = 40
+
+    return chunks
+
+
+sample_text = """
+Cohere is an AI company founded in 2019. It was created by researchers who
+worked at Google Brain. Their main products are language models for enterprise use.
+The company focuses on search, summarization, and text generation. Cohere's Embed
+model is considered one of the best in the world for semantic search. Their Command
+model is optimized for retrieval-augmented generation tasks. Cohere also offers
+private deployment, meaning companies can run the models on their own servers.
+This is a major advantage for businesses that handle sensitive data.
+"""
+chunks = chunk_text(sample_text, chunking=50, overlaping=10)
+
+for i, chunk in enumerate(chunks):
+    print(f'--- {i+1} ---')
+    print(chunk)
+    print(f'Characters: {len(chunk)}')
+```
+
+What does this code do? 
+
+It's about making the text into chunks using the overlap method
